@@ -1,0 +1,19 @@
+html{
+    font-family: 'Vazir' , sans-serif;
+}
+
+body{
+    background:linear-gradient(to top , #56ab2f , #a8e063)fixed ;
+}
+
+.game-bady{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.score{
+    font-size: 8rem;
+}
