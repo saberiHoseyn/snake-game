@@ -3,7 +3,7 @@
 const gameCanvas = document.querySelector("#game-convas");
 const ctx = gameCanvas.getContext("2d");
 
-
+document.addEventListener("keydown" , (event)=> chengeDirection(event))
 
 let snake = [
     { x : 150 , y : 150 },
@@ -15,7 +15,9 @@ let snake = [
 
 let foodX;
 let foodY;
-
+let dx = 10;
+let dy = 0;
+let chengingDirection = false;
 
 createLocationFoodRandom();
 main();
@@ -78,19 +80,51 @@ function drawFood() {
 }
 
 function advanceSnake() {   
-    const head = { x : (snake[0].x +10) , y : snake[0].y}
+    const head = { x : (snake[0].x + dx) , y : (snake[0].y + dy)}
     
     snake.unshift(head);
     snake.pop();
-    
+
     createCanvas();
     drawFood();
     createSnake();
 };
 
 function main() {
-    setTimeout( ()=>{[advanceSnake(),main()]},100)
+    setTimeout( ()=>{[chengingDirection = false , advanceSnake() , main()]},1000)
 };
+
+function chengeDirection(event) {
+    const keyPressed = event.keyCode;
+    const leftKey = 37;
+    const rightKey = 39;
+    const upKey = 38;
+    const downKey = 40;
+
+    if(chengingDirection) return;
+    
+    chengingDirection = true;
+
+    if( keyPressed === leftKey && dx !== 10 ){
+        dx = -10;
+        dy = 0;
+    }
+
+    if( keyPressed === rightKey && dx !== -10 ){
+        dx = 10;
+        dy = 0;
+    }
+
+    if( keyPressed === upKey && dy !== 10 ){
+        dx = 0;
+        dy = -10;
+    }
+    
+    if( keyPressed === downKey && dy !== -10 ){
+        dx = 0;
+        dy = 10;
+    }
+}
 
 
 
