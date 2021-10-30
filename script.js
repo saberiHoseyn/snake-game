@@ -4,11 +4,6 @@ const gameCanvas = document.querySelector("#game-convas");
 const ctx = gameCanvas.getContext("2d");
 
 
-ctx.fillStyle = 'white';
-ctx.strokeStyle = 'blue'
-
-ctx.fillRect(0 , 0 , gameCanvas.width , gameCanvas.height);
-ctx.strokeRect(0 , 0 , gameCanvas.width , gameCanvas.height);
 
 let snake = [
     { x : 150 , y : 150 },
@@ -20,12 +15,35 @@ let snake = [
 
 let foodX;
 let foodY;
-createSnake();
-
-createFood();
 
 
+createLocationFoodRandom();
+main();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function createCanvas() {
+    ctx.fillStyle = 'white';
+    ctx.strokeStyle = 'blue'
+
+    ctx.fillRect(0 , 0 , gameCanvas.width , gameCanvas.height);
+    ctx.strokeRect(0 , 0 , gameCanvas.width , gameCanvas.height);
+}
 
 function createSnake(){
     snake.forEach(snakePart => {
@@ -37,7 +55,7 @@ function createSnake(){
     });
 };
 
-function createFood(){
+function createLocationFoodRandom(){
     randomNumber = (max , min)=> Math.round((Math.random()*(max - min)+min)/10)*10; 
 
     foodX = randomNumber(gameCanvas.height - 10 , 0);
@@ -45,15 +63,32 @@ function createFood(){
 
     snake.forEach(snakePart => {
         if(foodX === snakePart.x && foodY === snakePart.y){
-            createFood()
-        }
+            createFood();
+        };
     });
+};
 
+function drawFood() {
+    
     ctx.fillStyle = 'red';
     ctx.strokeStyle = 'darkred';
 
     ctx.fillRect(foodX , foodY , 10 , 10);
     ctx.strokeRect(foodX , foodY , 10 , 10);
+}
+
+function advanceSnake() {   
+    const head = { x : (snake[0].x +10) , y : snake[0].y}
+    
+    snake.unshift(head);
+    snake.pop();
+    createCanvas();
+    drawFood();
+    createSnake();
+};
+
+function main() {
+    setTimeout( ()=>{[advanceSnake(),main()]},100)
 };
 
 
