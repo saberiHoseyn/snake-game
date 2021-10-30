@@ -63,7 +63,7 @@ function createLocationFoodRandom(){
 
     snake.forEach(snakePart => {
         if(foodX === snakePart.x && foodY === snakePart.y){
-            createFood();
+            createLocationFoodRandom();
         };
     });
 };
@@ -82,6 +82,7 @@ function advanceSnake() {
     
     snake.unshift(head);
     snake.pop();
+    
     createCanvas();
     drawFood();
     createSnake();
