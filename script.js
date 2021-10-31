@@ -2,6 +2,7 @@
 
 const gameCanvas = document.querySelector("#game-convas");
 const ctx = gameCanvas.getContext("2d");
+const elScore = document.querySelector(".game-body .score");
 
 document.addEventListener("keydown" , (event)=> chengeDirection(event))
 
@@ -18,7 +19,9 @@ let foodY;
 let dx = 10;
 let dy = 0;
 let chengingDirection = false;
+let score = 0;
 
+elScore.innerHTML = score;
 createLocationFoodRandom();
 main();
 
@@ -82,8 +85,15 @@ function drawFood() {
 function advanceSnake() {   
     const head = { x : (snake[0].x + dx) , y : (snake[0].y + dy)}
     
+    if(head.x === foodX && head.y === foodY){
+        score += 10;
+        elScore.innerHTML = score;
+        createLocationFoodRandom();
+
+    }else{
+        snake.pop();
+    }
     snake.unshift(head);
-    snake.pop();
 
     createCanvas();
     drawFood();
@@ -91,7 +101,7 @@ function advanceSnake() {
 };
 
 function main() {
-    setTimeout( ()=>{[chengingDirection = false , advanceSnake() , main()]},1000)
+    setTimeout( ()=>{[chengingDirection = false , advanceSnake() , main()]},200)
 };
 
 function chengeDirection(event) {
